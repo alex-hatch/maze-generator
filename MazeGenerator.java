@@ -21,17 +21,20 @@ public class MazeGenerator {
             getAdjacentNeighbors(eachCell);
         }
 
-        // print adjacency list for each cell
+/*        // print adjacency list for each cell
         for(MazeCell eachCell : listOfCells) {
             printAdjList(eachCell);
-        }
+        }*/
 
         generateMaze();
 
         System.out.println();
         for(MazeCell eachCell : listOfCells) {
-            printAdjList(eachCell);
+            printMazeAdj(eachCell);
         }
+
+        displayMaze(listOfCells);
+
     }
 
     public void getAdjacentNeighbors(MazeCell cell) {
@@ -123,8 +126,62 @@ public class MazeGenerator {
 
         }
 
+        cell1.adjMazeCells.add(cell2);
+        cell2.adjMazeCells.add(cell1);
+
         cell1.adjacentCells.remove(cell2);
         cell2.adjacentCells.remove(cell1);
+    }
+
+    private void displayMaze(ArrayList<MazeCell> cells) {
+        System.out.println("");
+        MazeCell[][] grid = new MazeCell[SIZE][SIZE];
+
+        // Put cells into SIZExSIZE matrix for easier iteration
+        int count = 0;
+        for(int i = 0; i < SIZE; i++) {
+            for(int j = 0; j < SIZE; j++) {
+                grid[j][i] = cells.get(count++);
+            }
+        }
+
+
+        for(int i = 0; i < SIZE; i++) {
+            // Print north walls
+            for(int j = 0; j < SIZE; j++) {
+                if(grid[j][i].walls[0]) {
+                    if(i == 0 && j == 0) {
+                        System.out.print("+   ");
+                    } else {
+                        System.out.print("+---");
+                    }
+                } else {
+                    System.out.print("+   ");
+                }
+            }
+            System.out.println("+");
+
+            // Print inner walls (east and west)
+            for(int j = 0; j < SIZE; j++) {
+                if(grid[j][i].walls[3]) {
+                    System.out.print("|   ");
+                } else {
+                    System.out.print("    ");
+                }
+            }
+            System.out.println("|");
+        }
+
+        // Print bottom
+        for(int j = 0; j < SIZE; j++) {
+            if(j == SIZE - 1) {
+                System.out.print("+   ");
+            } else {
+                System.out.print("+---");
+            }
+        }
+        System.out.println("+");
+
     }
 
     private void printAdjList(MazeCell cell) {
@@ -134,12 +191,37 @@ public class MazeGenerator {
         }
         System.out.println();
     }
+
+    private void printMazeAdj(MazeCell cell) {
+        System.out.print(cell.LOCATION + ": ");
+        for(MazeCell eachCell : cell.adjMazeCells) {
+            System.out.print(eachCell.LOCATION + " ");
+        }
+        System.out.println();
+    }
+
+    private void printWalls(ArrayList<MazeCell> listOfCells) {
+        for(MazeCell eachCell : listOfCells) {
+            for(boolean eachWall : eachCell.walls) {
+                System.out.print(eachWall);
+            }
+            System.out.println();
+        }
+    }
 }
 
 class MazeCell {
     final int LOCATION;
     boolean[] walls;
+
+    // the adjacency list to represent all neighbors (regardless of wall status)
+    // used to determine what adjacent cells have all their walls in tact
     ArrayList<MazeCell> adjacentCells;
+
+    // The adjacency list to represent the maze
+    // When populated will represent a random generated maze
+    ArrayList<MazeCell> adjMazeCells;
+
     boolean visited;
 
     public MazeCell(int location) {
@@ -147,6 +229,7 @@ class MazeCell {
         walls = new boolean[]{true, true, true, true};
         adjacentCells = new ArrayList<>();
         visited = false;
+        adjMazeCells = new ArrayList<>();
     }
 
     public boolean hasAllWalls() {
@@ -161,6 +244,6 @@ class MazeCell {
 
 class Test {
     public static void main(String[] args) {
-        new MazeGenerator(3);
+        new MazeGenerator(5);
     }
 }
