@@ -140,7 +140,7 @@ public class MazeGenerator {
         int count = 0;
         for(int i = 0; i < SIZE; i++) {
             for(int j = 0; j < SIZE; j++) {
-                grid[j][i] = cells.get(count++);
+                grid[i][j] = cells.get(count++);
             }
         }
 
@@ -148,7 +148,7 @@ public class MazeGenerator {
         for(int row = 0; row < SIZE; row++) {
             // Print top walls
             for(int column = 0; column < SIZE; column++) {
-                if(grid[column][row].walls[0]) {
+                if(grid[row][column].walls[0]) {
                     if(row == 0 && column == 0) {
                         System.out.print("+   ");
                     } else {
@@ -162,7 +162,7 @@ public class MazeGenerator {
 
             // Print inner walls (east and west)
             for(int column = 0; column < SIZE; column++) {
-                if(grid[column][row].walls[3]) {
+                if(grid[row][column].walls[3]) {
                     System.out.print("|   ");
                 } else {
                     System.out.print("    ");
@@ -245,6 +245,6 @@ class MazeCell {
 
 class Test {
     public static void main(String[] args) {
-        new MazeGenerator(30);
+        new MazeGenerator(10);
     }
 }
