@@ -134,10 +134,9 @@ public class MazeGenerator {
     }
 
     private void displayMaze(ArrayList<MazeCell> cells) {
-        System.out.println("");
         MazeCell[][] grid = new MazeCell[SIZE][SIZE];
 
-        // Put cells into SIZExSIZE matrix for easier iteration
+        // Put cells into SIZExSIZE matrix for easier iteration and printing
         int count = 0;
         for(int i = 0; i < SIZE; i++) {
             for(int j = 0; j < SIZE; j++) {
@@ -146,11 +145,11 @@ public class MazeGenerator {
         }
 
 
-        for(int i = 0; i < SIZE; i++) {
-            // Print north walls
-            for(int j = 0; j < SIZE; j++) {
-                if(grid[j][i].walls[0]) {
-                    if(i == 0 && j == 0) {
+        for(int row = 0; row < SIZE; row++) {
+            // Print top walls
+            for(int column = 0; column < SIZE; column++) {
+                if(grid[column][row].walls[0]) {
+                    if(row == 0 && column == 0) {
                         System.out.print("+   ");
                     } else {
                         System.out.print("+---");
@@ -162,8 +161,8 @@ public class MazeGenerator {
             System.out.println("+");
 
             // Print inner walls (east and west)
-            for(int j = 0; j < SIZE; j++) {
-                if(grid[j][i].walls[3]) {
+            for(int column = 0; column < SIZE; column++) {
+                if(grid[column][row].walls[3]) {
                     System.out.print("|   ");
                 } else {
                     System.out.print("    ");
@@ -173,13 +172,15 @@ public class MazeGenerator {
         }
 
         // Print bottom
-        for(int j = 0; j < SIZE; j++) {
-            if(j == SIZE - 1) {
+        for(int column = 0; column < SIZE; column++) {
+            if(column == SIZE - 1) {
                 System.out.print("+   ");
             } else {
                 System.out.print("+---");
             }
         }
+
+        // Bottom right +
         System.out.println("+");
 
     }
@@ -224,7 +225,7 @@ class MazeCell {
 
     boolean visited;
 
-    public MazeCell(int location) {
+     MazeCell(int location) {
         LOCATION = location;
         walls = new boolean[]{true, true, true, true};
         adjacentCells = new ArrayList<>();
@@ -244,6 +245,6 @@ class MazeCell {
 
 class Test {
     public static void main(String[] args) {
-        new MazeGenerator(5);
+        new MazeGenerator(30);
     }
 }
