@@ -2,6 +2,10 @@ package cs146F21.hatch.project3;
 
 import java.util.*;
 
+/**
+ * MazeGenerator class builds a nxn randomized maze. User specifies the size of the maze (n).
+ * @author Alex Hatch and Christina Jones - Group 6
+ */
 public class MazeGenerator {
     private final int SIZE;
     private final ArrayList<MazeCell> listOfCells;
@@ -9,6 +13,11 @@ public class MazeGenerator {
     private final ArrayList<MazeCell> bfsCellPath;
     private final ArrayList<MazeCell> shortestPathList;
 
+    /**
+     * Initializes the maze. The initialization generates an unsolved maze (using DFS algorithm), solves the maze
+     * using DFS and BFS, and then calculates the shortest path solution.
+     * @param size The size of the maze (the maze generated will have dimension size*size)
+     */
     public MazeGenerator(int size) {
         SIZE = size;
         listOfCells = new ArrayList<>();
@@ -38,6 +47,7 @@ public class MazeGenerator {
         shortestPath();
     }
 
+    // populates adjacency matrix for each cell in the maze.
     private void getAdjacentNeighbors(MazeCell cell) {
         int row = cell.LOCATION / SIZE;
         int column = cell.LOCATION % SIZE;
@@ -64,6 +74,7 @@ public class MazeGenerator {
         }
     }
 
+    // Uses DFS algorithm to "carve" out the maze.
     private void generateMaze() {
         Stack<MazeCell> cellStack = new Stack<>();
         int totalCells = SIZE * SIZE;
@@ -86,6 +97,7 @@ public class MazeGenerator {
         }
     }
 
+    // Gathers all valid neighbors a maze cell. A valid neighbor is a neighbor that has all walls in tact.
     private ArrayList<MazeCell> validNeighbors(MazeCell cell) {
         ArrayList<MazeCell> validNeighborList = new ArrayList<>();
         for (MazeCell each : cell.adjacentCells) {
@@ -96,6 +108,7 @@ public class MazeGenerator {
         return validNeighborList;
     }
 
+    // Removes the wall between two cells
     private void removeWall(MazeCell cell1, MazeCell cell2) {
 
         // System.out.println("Currently removing walls between " + cell1.LOCATION + " and " + cell2.LOCATION);
@@ -126,6 +139,9 @@ public class MazeGenerator {
         cell2.adjacentCells.remove(cell1);
     }
 
+    /**
+     * Outputs the DFS solution to the console.
+     */
     public void displayDepthFirstSolution() {
         MazeCell[][] grid = new MazeCell[SIZE][SIZE];
 
@@ -187,6 +203,9 @@ public class MazeGenerator {
 
     }
 
+    /**
+     * Outputs the BFS solution to the console.
+     */
     public void displayBreadthFirstSolution() {
         MazeCell[][] grid = new MazeCell[SIZE][SIZE];
 
@@ -248,6 +267,9 @@ public class MazeGenerator {
 
     }
 
+    /**
+     * Outputs the shortest path solution to the console.
+     */
     public void displayShortestPath() {
         System.out.println("Shortest Path Length: " + shortestPathList.size());
         MazeCell[][] grid = new MazeCell[SIZE][SIZE];
@@ -317,6 +339,9 @@ public class MazeGenerator {
 
     }
 
+    /**
+     * Outputs an unsolved maze to the console.
+     */
     public void displayMaze() {
         System.out.println("Unsolved Maze");
         MazeCell[][] grid = new MazeCell[SIZE][SIZE];
@@ -370,6 +395,7 @@ public class MazeGenerator {
 
     }
 
+    // Helper method to print the shortest path in ascending order. Necessary since cells are added in a stack
     private ArrayList<MazeCell> reverseArrayList(ArrayList<MazeCell> list) {
         ArrayList<MazeCell> reversedList = new ArrayList<>();
         for (int i = list.size() - 1; i >= 0; i--) {
@@ -378,6 +404,7 @@ public class MazeGenerator {
         return reversedList;
     }
 
+    // Solves the maze via recursive DFS implementation
     private void depthFirstSolve(MazeCell cell) {
         if (cell == null) {
             return;
@@ -398,6 +425,8 @@ public class MazeGenerator {
         }
     }
 
+    // Calculates the shortest path using an adjusted BFS algorithm. The path of BFS is added onto a stack
+    // to trace back the path to the start of the maze.
     private void shortestPath() {
         MazeCell startCell = listOfCells.get(0);
         MazeCell endCell = listOfCells.get(listOfCells.size() - 1);
@@ -437,6 +466,7 @@ public class MazeGenerator {
         }
     }
 
+    // Solves the maze via BFS algorithm
     private void breadthFirstSolve(MazeCell cell) {
         Queue<MazeCell> queue = new LinkedList<>();
         cell.visited = true;
@@ -457,6 +487,7 @@ public class MazeGenerator {
         }
     }
 
+    // Resets each mazeCell to unvisited. Necessary to solve the maze multiple ways per one instance.
     private void resetVisitState() {
         for (MazeCell eachCell : listOfCells) {
             eachCell.visited = false;
@@ -493,15 +524,5 @@ public class MazeGenerator {
             }
             return true;
         }
-    }
-}
-
-class Test {
-    public static void main(String[] args) {
-        MazeGenerator mazeGenerator = new MazeGenerator(4);
-        mazeGenerator.displayMaze();
-        mazeGenerator.displayBreadthFirstSolution();
-        mazeGenerator.displayDepthFirstSolution();
-        mazeGenerator.displayShortestPath();
     }
 }
