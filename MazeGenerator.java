@@ -1,5 +1,7 @@
-package hatchjones.cs146.project3;
+package cs146F21.hatch.project3;
 
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.*;
 
 /**
@@ -7,6 +9,7 @@ import java.util.*;
  * @author Alex Hatch and Christina Jones - Group 6
  */
 public class MazeGenerator {
+
     private final int SIZE;
     private final ArrayList<MazeCell> listOfCells;
     private final ArrayList<MazeCell> dfsCellPath;
@@ -18,7 +21,7 @@ public class MazeGenerator {
      * using DFS and BFS, and then calculates the shortest path solution.
      * @param size The size of the maze (the maze generated will have dimension size*size)
      */
-    public MazeGenerator(int size) {
+    public MazeGenerator(int size){
         SIZE = size;
         listOfCells = new ArrayList<>();
         dfsCellPath = new ArrayList<>();
@@ -524,5 +527,18 @@ public class MazeGenerator {
             }
             return true;
         }
+    }
+}
+
+class Test {
+    public static void main(String[] args) throws FileNotFoundException {
+        PrintStream fileOut = new PrintStream("maze.txt");
+        System.setOut(fileOut);
+        MazeGenerator maze = new MazeGenerator(4);
+        maze.displayMaze();
+        maze.displayDepthFirstSolution();
+        maze.displayShortestPath();
+        maze.displayDepthFirstSolution();
+        maze.displayShortestPath();
     }
 }
