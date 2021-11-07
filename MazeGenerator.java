@@ -1,4 +1,4 @@
-package cs146F21.hatch.project3;
+package hatchjones.cs146.project3;
 
 import java.util.*;
 
