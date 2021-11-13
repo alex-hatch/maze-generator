@@ -538,7 +538,7 @@ class Test {
         maze.displayMaze();
         maze.displayDepthFirstSolution();
         maze.displayShortestPath();
-        maze.displayDepthFirstSolution();
+        maze.displayBreadthFirstSolution();
         maze.displayShortestPath();
     }
 }
