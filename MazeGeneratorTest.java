@@ -12,21 +12,32 @@ class MazeGeneratorTest {
     
     @Test
     void displayDepthFirstSolution() {
-        
+        testing.displayDepthFirstSolution();
+        odd.displayDepthFirstSolution();
+        even.displayDepthFirstSolution();
     }
 
     @Test
     void displayBreadthFirstSolution() {
+        testing.displayBreadthFirstSolution();
+        odd.displayBreadthPath();
+        even.displayBreadthPath();
         
     }
 
     @Test
     void displayShortestPath() {
+        testing.displayShortestPath();
+        odd.displayShortestPath();
+        even.displayShortestPath();
         
     }
 
     @Test
     void displayMaze() {
+        testing.displayMaze();
+        odd.displayMaze();
+        even.displayMaze();
         
     }
 }
