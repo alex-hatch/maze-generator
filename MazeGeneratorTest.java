@@ -10,6 +10,10 @@ class MazeGeneratorTest {
     MazeGenerator odd = new MazeGenerator(7);
     MazeGenerator even = new MazeGenerator(10);
     
+    //save the following tests in a seperate txt
+    //have a saved expected output txt for each tested maze
+    
+    //Checks for correct DFS
     @Test
     void displayDepthFirstSolution() {
         testing.displayDepthFirstSolution();
